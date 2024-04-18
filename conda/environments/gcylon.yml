@@ -10,8 +10,8 @@ dependencies:
   - arrow-cpp=14.0.2
   - pyarrow=14.0.2
   - cython>=0.29.31,<3
-  - cudf=22.12.01
-  - cudatoolkit=11.5
+  - cudf
+  - cudatoolkit=12.2
   - glog
   - openmpi=4.1.4
   - ucx>=1.12.1
