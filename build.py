@@ -18,6 +18,7 @@ import os
 import platform
 import subprocess
 import sys
+import pyarrow as pa
 from pathlib import Path
 
 logging.basicConfig(format='[%(levelname)s] %(message)s')
@@ -216,6 +217,13 @@ def build_cpp():
     win_cmake_args = "-A x64" if os.name == 'nt' else ""
     verb = '-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON' if args.verbose else ''
     clean = '--clean-first' if args.clean else ''
+
+    pyarrow_location = os.path.dirname(pa.__file__)
+    conda_prefix = check_conda_prefix()
+    sym_generator = f"ln -s {pyarrow_location}/libarrow_python.so {conda_prefix}/lib/libarrow_python.so"
+    logger.info(f"Generate Symbolic link: {sym_generator}")
+    res = subprocess.call(sym_generator, cwd=BUILD_DIR, shell=True)
+    check_status(res, "Generate Symbolic link")
 
     cmake_command = f"cmake -DPYCYLON_BUILD={on_off(BUILD_PYTHON)} {win_cmake_args} " \
                     f"-DCMAKE_BUILD_TYPE={CPP_BUILD_MODE} " \

@@ -300,7 +300,6 @@ build_cpp_conda() {
   print_line
   echo "Building Conda CPP in ${BUILD_MODE} mode"
   print_line
-  echo $PYTHONPATH
 
   # set install path to conda directory if not already set
   INSTALL_PATH=${INSTALL_PATH:=${PREFIX:=${CONDA_PREFIX}}}
@@ -315,10 +314,14 @@ build_cpp_conda() {
   for SO_FILE in "${ARROW_LIB}/libarrow.so" "${ARROW_LIB}/libarrow_python.so"; do
     if [ ! -f "$SO_FILE" ]; then
       echo "$SO_FILE does not exist! Trying to create a symlink"
-      ln -sf "$(ls "$SO_FILE".*)" "$SO_FILE" || exit 1
+      PYARROW_LIB=$(python3 -c 'import pyarrow as pa; import os; print(os.path.dirname(pa.__file__))') || exit 1
+      ln -sf ${PYARROW_LIB}/libarrow_python.so "$SO_FILE" || exit 1
     fi
   done
-  ln -s $PYTHONPATH/pyarrow/libarrow_python.so $CONDA_PREFIX/lib/libarrow_python.so
+
+
+
+  #ln -s ${ARROW_LIB}/libarrow_python.so ${PYARROW_LIB}/libarrow_python.so
 
   echo "SOURCE_DIR: ${SOURCE_DIR}"
   BUILD_PATH=$(pwd)/build
@@ -400,11 +403,9 @@ build_python_pyarrow() {
 build_python_conda() {
   print_line
   echo "Building Python"
-  echo $PYTHONPATH
   ARROW_LIB=${CONDA_PREFIX}/lib
   LD_LIBRARY_PATH="${ARROW_LIB}:${BUILD_PATH}/lib:${LD_LIBRARY_PATH}" || exit 1
   export_library_path ${LD_LIBRARY_PATH}
-  ln -s $PYTHONPATH/pyarrow/libarrow_python.so $CONDA_PREFIX/lib/libarrow_python.so
 
   pushd python/pycylon || exit 1
   make clean

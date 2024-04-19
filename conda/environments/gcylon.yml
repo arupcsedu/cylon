@@ -2,6 +2,7 @@ name: gcylon_dev
 channels:
   - rapidsai
   - nvidia
+  - nvidia/label/cuda-12.2.0
   - conda-forge
   - defaults
 dependencies:
@@ -10,8 +11,8 @@ dependencies:
   - arrow-cpp=14.0.2
   - pyarrow=14.0.2
   - cython>=0.29.31,<3
-  - cudf
-  - cudatoolkit=12.2
+  - cudf=24.04
+  - cudatoolkit
   - glog
   - openmpi=4.1.4
   - ucx>=1.12.1
