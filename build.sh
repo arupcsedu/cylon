@@ -300,6 +300,7 @@ build_cpp_conda() {
   print_line
   echo "Building Conda CPP in ${BUILD_MODE} mode"
   print_line
+  echo $PYTHONPATH
 
   # set install path to conda directory if not already set
   INSTALL_PATH=${INSTALL_PATH:=${PREFIX:=${CONDA_PREFIX}}}
@@ -317,6 +318,7 @@ build_cpp_conda() {
       ln -sf "$(ls "$SO_FILE".*)" "$SO_FILE" || exit 1
     fi
   done
+  ln -s $PYTHONPATH/pyarrow/libarrow_python.so $CONDA_PREFIX/lib/libarrow_python.so
 
   echo "SOURCE_DIR: ${SOURCE_DIR}"
   BUILD_PATH=$(pwd)/build
@@ -380,7 +382,7 @@ build_python_pyarrow() {
   echo "Building Pycylon"
   source "${PYTHON_ENV_PATH}"/bin/activate || exit 1
   read_python_requirements
-  pip install pyarrow==9.0.0 || exit 1
+  pip install pyarrow==14.0.2 || exit 1
 
   ARROW_LIB=$(python3 -c 'import pyarrow as pa; import os; print(os.path.dirname(pa.__file__))') || exit 1
   LD_LIBRARY_PATH="${ARROW_LIB}:${BUILD_PATH}/lib:${LD_LIBRARY_PATH}" || exit 1
@@ -398,9 +400,11 @@ build_python_pyarrow() {
 build_python_conda() {
   print_line
   echo "Building Python"
+  echo $PYTHONPATH
   ARROW_LIB=${CONDA_PREFIX}/lib
   LD_LIBRARY_PATH="${ARROW_LIB}:${BUILD_PATH}/lib:${LD_LIBRARY_PATH}" || exit 1
   export_library_path ${LD_LIBRARY_PATH}
+  ln -s $PYTHONPATH/pyarrow/libarrow_python.so $CONDA_PREFIX/lib/libarrow_python.so
 
   pushd python/pycylon || exit 1
   make clean
