@@ -349,6 +349,7 @@ build_gcylon() {
 
   # set install path to conda directory if not already set
   INSTALL_PATH=${INSTALL_PATH:=${PREFIX:=${CONDA_PREFIX}}}
+  export CUDA_HOME=$CONDA_PREFIX/bin
 
   echo "SOURCE_DIR: ${SOURCE_DIR}"
   BUILD_PATH=$(pwd)/build
