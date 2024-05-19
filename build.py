@@ -224,6 +224,26 @@ def build_cpp():
     logger.info(f"Generate Symbolic link: {sym_generator}")
     res = subprocess.call(sym_generator, cwd=BUILD_DIR, shell=True)
     check_status(res, "Generate Symbolic link")
+    
+    export_cc = f"export CC=`which mpicc`"
+    logger.info(f"export cc: {export_cc}")
+    res = subprocess.call(export_cc, cwd=BUILD_DIR, shell=True)
+    check_status(res, "Export CC")
+    
+    export_cxx = f"export CXX=`which mpicxx`"
+    logger.info(f"export cxx: {export_cxx}")
+    res = subprocess.call(export_cxx, cwd=BUILD_DIR, shell=True)
+    check_status(res, "Export CXX")
+    
+    export_mpicc = f"export MPI_CC=`which mpicc`"
+    logger.info(f"export mpicc: {export_mpicc}")
+    res = subprocess.call(export_mpicc, cwd=BUILD_DIR, shell=True)
+    check_status(res, "Export MPI_CC")
+    
+    export_mpicxx = f"export MPI_CXX=`which mpicxx`"
+    logger.info(f"export mpicxx: {export_mpicxx}")
+    res = subprocess.call(export_mpicxx, cwd=BUILD_DIR, shell=True)
+    check_status(res, "Export MPI_CXX")
 
     cmake_command = f"cmake -DPYCYLON_BUILD={on_off(BUILD_PYTHON)} {win_cmake_args} " \
                     f"-DCMAKE_BUILD_TYPE={CPP_BUILD_MODE} " \

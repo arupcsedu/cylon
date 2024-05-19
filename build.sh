@@ -300,6 +300,11 @@ build_cpp_conda() {
   print_line
   echo "Building Conda CPP in ${BUILD_MODE} mode"
   print_line
+  
+  export CC=`which mpicc`
+  export CXX=`which mpicxx`
+  export MPI_CC=`which mpicc`
+  export MPI_CXX=`which mpicxx`
 
   # set install path to conda directory if not already set
   INSTALL_PATH=${INSTALL_PATH:=${PREFIX:=${CONDA_PREFIX}}}

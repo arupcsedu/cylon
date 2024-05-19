@@ -3,17 +3,13 @@ channels:
   - rapidsai
   - conda-forge
   - nvidia
-  - nvidia/label/cuda-12.2.0
   - defaults
 dependencies:
-  - python=3.9
   - cudf=24.04
+  - python=3.11
   - cuda-version=12.2
   #- pytorch
-  - cudatoolkit
   - cmake>=3.23.1
-  #- arrow-cpp=14.0.2
-  #- pyarrow=14.0.2
   - cython
   - glog
   - openmpi=4.1.4
@@ -30,3 +26,5 @@ dependencies:
   - gcc=11.4
   - gxx=11.4
   - gxx_linux-64=11.4
+  - cuda-runtime
+  - cudatoolkit
