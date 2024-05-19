@@ -7,7 +7,7 @@ channels:
 dependencies:
   - cudf=24.04
   - python=3.11
-  - cuda-version=12.2
+  #- cuda-version=12.2
   #- pytorch
   - cmake>=3.23.1
   - cython
@@ -17,7 +17,7 @@ dependencies:
   - numpy
   - pandas
   - fsspec
-  - setuptools
+  #- setuptools
   # these are for running tests only,
   # they are not needed for using pygcylon or compiling it
   - pytest
