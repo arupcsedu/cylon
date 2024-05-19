@@ -220,35 +220,25 @@ def build_cpp():
 
     pyarrow_location = os.path.dirname(pa.__file__)
     conda_prefix = check_conda_prefix()
-    sym_generator = f"ln -s {pyarrow_location}/libarrow_python.so {conda_prefix}/lib/libarrow_python.so"
-    logger.info(f"Generate Symbolic link: {sym_generator}")
-    res = subprocess.call(sym_generator, cwd=BUILD_DIR, shell=True)
-    check_status(res, "Generate Symbolic link")
+    if not os.path.exists(f"{conda_prefix}/lib/libarrow_python.so"):
+        sym_generator = f"ln -s {pyarrow_location}/libarrow_python.so {conda_prefix}/lib/libarrow_python.so"
+        logger.info(f"Generate Symbolic link: {sym_generator}")
+        res = subprocess.call(sym_generator, cwd=BUILD_DIR, shell=True)
+        check_status(res, "Generate Symbolic link")
 
     
-    export_cc = f'export CC=which mpicc'
-    logger.info(f"export cc: {export_cc}")
-    res = subprocess.call(export_cc, cwd=BUILD_DIR, shell=True)
-    check_status(res, "Export CC")
+    os.environ['CC']=f"{conda_prefix}/bin/mpicc" 
     logger.info(f"export cc: : {os.getenv('CC')}")
-    
-    export_cxx = f'export CXX=which mpicxx'
-    logger.info(f"export cxx: {export_cxx}")
-    res = subprocess.call(export_cxx, cwd=BUILD_DIR, shell=True)
-    check_status(res, "Export CXX")
+
+    os.environ['CXX']=f"{conda_prefix}/bin/mpicxx" 
     logger.info(f"export cxx: : {os.getenv('CXX')}")
     
-    export_mpicc = f'export MPI_CC=which mpicc'
-    logger.info(f"export mpicc: {export_mpicc}")
-    res = subprocess.call(export_mpicc, cwd=BUILD_DIR, shell=True)
-    check_status(res, "Export MPI_CC")
+    os.environ['MPI_CC']=f"{conda_prefix}/bin/mpicc" 
     logger.info(f"export mpicc: : {os.getenv('MPI_CC')}")
-    
-    export_mpicxx = f'export MPI_CXX=which mpicxx'
-    logger.info(f"export mpicxx: {export_mpicxx}")
-    res = subprocess.call(export_mpicxx, cwd=BUILD_DIR, shell=True)
-    check_status(res, "Export MPI_CXX")
+
+    os.environ['MPI_CXX']=f"{conda_prefix}/bin/mpicxx" 
     logger.info(f"export mpicxx: : {os.getenv('MPI_CXX')}")
+
 
     cmake_command = f"cmake -DPYCYLON_BUILD={on_off(BUILD_PYTHON)} {win_cmake_args} " \
                     f"-DCMAKE_BUILD_TYPE={CPP_BUILD_MODE} " \
