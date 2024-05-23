@@ -262,6 +262,7 @@ build_cpp_with_custom_arrow() {
   print_line
   source "${PYTHON_ENV_PATH}"/bin/activate || exit 1
   read_python_requirements
+  pip install pyarrow==14.0.2 || exit 1
   ARROW_LIB=$(python3 -c 'import pyarrow as pa; import os; print(os.path.dirname(pa.__file__))') || exit 1
   ARROW_INC=$(python3 -c 'import pyarrow as pa; import os; print(os.path.join(os.path.dirname(pa.__file__), "include"))') || exit 1
   echo "ARROW_LIB: $ARROW_LIB"
@@ -391,7 +392,7 @@ build_python_pyarrow() {
   echo "Building Pycylon"
   source "${PYTHON_ENV_PATH}"/bin/activate || exit 1
   read_python_requirements
-  pip install pyarrow==14.0.2 || exit 1
+  #pip install pyarrow==14.0.2 || exit 1
 
   ARROW_LIB=$(python3 -c 'import pyarrow as pa; import os; print(os.path.dirname(pa.__file__))') || exit 1
   LD_LIBRARY_PATH="${ARROW_LIB}:${BUILD_PATH}/lib:${LD_LIBRARY_PATH}" || exit 1
@@ -537,7 +538,7 @@ fi
 
 if [ "${PYTHON_BUILD}" = "ON" ]; then
   export_info
-  build_pyarrow
+  #build_pyarrow
   check_pyarrow_installation
   build_python
   check_pycylon_installation
