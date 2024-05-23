@@ -263,6 +263,7 @@ build_cpp_with_custom_arrow() {
   source "${PYTHON_ENV_PATH}"/bin/activate || exit 1
   read_python_requirements
   pip install pyarrow==14.0.2 || exit 1
+  pip install parquet || exit 1
   ARROW_LIB=$(python3 -c 'import pyarrow as pa; import os; print(os.path.dirname(pa.__file__))') || exit 1
   ARROW_INC=$(python3 -c 'import pyarrow as pa; import os; print(os.path.join(os.path.dirname(pa.__file__), "include"))') || exit 1
   echo "ARROW_LIB: $ARROW_LIB"
