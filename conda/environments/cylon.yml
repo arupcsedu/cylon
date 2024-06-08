@@ -6,8 +6,8 @@ dependencies:
   #- python>=3.8
   - python>=3.8,<3.10
   - cmake>=3.23.1
-  - arrow-cpp=14.0.2
-  - pyarrow=14.0.2
+  - arrow-cpp=16.1.0
+  - pyarrow=16.1.0
   - glog
   - openmpi=4.1.4
   - ucx>=1.12.1

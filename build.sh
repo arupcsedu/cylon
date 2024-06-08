@@ -262,7 +262,7 @@ build_cpp_with_custom_arrow() {
   print_line
   source "${PYTHON_ENV_PATH}"/bin/activate || exit 1
   read_python_requirements
-  pip install pyarrow==14.0.2 || exit 1
+  pip install pyarrow==16.1.0 || exit 1
   pip install parquet || exit 1
   ARROW_LIB=$(python3 -c 'import pyarrow as pa; import os; print(os.path.dirname(pa.__file__))') || exit 1
   ARROW_INC=$(python3 -c 'import pyarrow as pa; import os; print(os.path.join(os.path.dirname(pa.__file__), "include"))') || exit 1
@@ -356,7 +356,7 @@ build_gcylon() {
 
   # set install path to conda directory if not already set
   INSTALL_PATH=${INSTALL_PATH:=${PREFIX:=${CONDA_PREFIX}}}
-  export CUDA_HOME=$CONDA_PREFIX/bin
+  export CUDA_HOME=$CONDA_PREFIX
 
   echo "SOURCE_DIR: ${SOURCE_DIR}"
   BUILD_PATH=$(pwd)/build

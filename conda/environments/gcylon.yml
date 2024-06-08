@@ -5,8 +5,9 @@ channels:
   - nvidia
   - defaults
 dependencies:
-  - cudf=24.04
+  #- cudf=24.04
   - python=3.11
+  - cuda
   #- cuda-version=12.2
   #- pytorch
   - cmake>=3.23.1
@@ -17,7 +18,7 @@ dependencies:
   - numpy
   - pandas
   - fsspec
-  #- setuptools
+  - setuptools
   # these are for running tests only,
   # they are not needed for using pygcylon or compiling it
   - pytest
@@ -26,5 +27,6 @@ dependencies:
   - gcc=11.4
   - gxx=11.4
   - gxx_linux-64=11.4
-  - cuda-runtime
-  - cudatoolkit
+  #- cuda-runtime
+  #- cudatoolkit
+  - cudf
