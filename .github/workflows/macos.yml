@@ -28,6 +28,7 @@ jobs:
         run: rm -f /usr/local/bin/2to3
       - name: Install dependencies
         run: brew install re2 automake boost brotli c-ares ccache flatbuffers grpc llvm lz4 minio ninja openssl@1.1 protobuf rapidjson snappy thrift wget zstd miniconda
+        run: conda init "$(basename "${SHELL}")"
 
       - uses: conda-incubator/setup-miniconda@v2
         with:

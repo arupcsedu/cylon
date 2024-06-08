@@ -227,18 +227,17 @@ def build_cpp():
             res = subprocess.call(sym_generator, cwd=BUILD_DIR, shell=True)
             check_status(res, "Generate Symbolic link")
 
-    
-    os.environ['CC']=f"{conda_prefix}/bin/mpicc" 
-    logger.info(f"export cc: : {os.getenv('CC')}")
+        os.environ['CC']=f"{conda_prefix}/bin/mpicc" 
+        logger.info(f"export cc: : {os.getenv('CC')}")
 
-    os.environ['CXX']=f"{conda_prefix}/bin/mpicxx" 
-    logger.info(f"export cxx: : {os.getenv('CXX')}")
-    
-    os.environ['MPI_CC']=f"{conda_prefix}/bin/mpicc" 
-    logger.info(f"export mpicc: : {os.getenv('MPI_CC')}")
+        os.environ['CXX']=f"{conda_prefix}/bin/mpicxx" 
+        logger.info(f"export cxx: : {os.getenv('CXX')}")
+        
+        os.environ['MPI_CC']=f"{conda_prefix}/bin/mpicc" 
+        logger.info(f"export mpicc: : {os.getenv('MPI_CC')}")
 
-    os.environ['MPI_CXX']=f"{conda_prefix}/bin/mpicxx" 
-    logger.info(f"export mpicxx: : {os.getenv('MPI_CXX')}")
+        os.environ['MPI_CXX']=f"{conda_prefix}/bin/mpicxx" 
+        logger.info(f"export mpicxx: : {os.getenv('MPI_CXX')}")
 
 
     cmake_command = f"cmake -DPYCYLON_BUILD={on_off(BUILD_PYTHON)} {win_cmake_args} " \
