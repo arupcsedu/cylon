@@ -218,13 +218,14 @@ def build_cpp():
     verb = '-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON' if args.verbose else ''
     clean = '--clean-first' if args.clean else ''
 
-    pyarrow_location = os.path.dirname(pa.__file__)
-    conda_prefix = check_conda_prefix()
-    if not os.path.exists(f"{conda_prefix}/lib/libarrow_python.so"):
-        sym_generator = f"ln -s {pyarrow_location}/libarrow_python.so {conda_prefix}/lib/libarrow_python.so"
-        logger.info(f"Generate Symbolic link: {sym_generator}")
-        res = subprocess.call(sym_generator, cwd=BUILD_DIR, shell=True)
-        check_status(res, "Generate Symbolic link")
+    if OS_NAME == 'Linux':
+        pyarrow_location = os.path.dirname(pa.__file__)
+        conda_prefix = check_conda_prefix()
+        if not os.path.exists(f"{conda_prefix}/lib/libarrow_python.so"):
+            sym_generator = f"ln -s {pyarrow_location}/libarrow_python.so {conda_prefix}/lib/libarrow_python.so"
+            logger.info(f"Generate Symbolic link: {sym_generator}")
+            res = subprocess.call(sym_generator, cwd=BUILD_DIR, shell=True)
+            check_status(res, "Generate Symbolic link")
 
     
     os.environ['CC']=f"{conda_prefix}/bin/mpicc" 
