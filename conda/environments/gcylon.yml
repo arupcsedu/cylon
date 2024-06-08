@@ -1,17 +1,21 @@
 name: gcylon_dev
 channels:
   - rapidsai
-  - conda-forge
   - nvidia
+  - conda-forge
   - defaults
 dependencies:
-  #- cudf=24.04
+  - cudf
+  - cuda-toolkit
+  - cuda-runtime
+  - cuda-nvcc
+  - cuda-cudart
   - python=3.11
-  - cuda
-  #- cuda-version=12.2
-  #- pytorch
-  - cmake>=3.23.1
+  - cmake
+  #- arrow-cpp=9
+  #- pyarrow=9.0.0
   - cython
+  #- cuda-version=12
   - glog
   - openmpi=4.1.4
   - ucx>=1.12.1
@@ -24,9 +28,6 @@ dependencies:
   - pytest
   - pytest-mpi
   - mpi4py
-  - gcc=11.4
-  - gxx=11.4
-  - gxx_linux-64=11.4
-  #- cuda-runtime
-  #- cudatoolkit
-  - cudf
+  - gcc=12
+  - gxx=12
+  - gxx_linux-64=12
