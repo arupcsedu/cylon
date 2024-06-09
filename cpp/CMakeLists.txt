@@ -82,6 +82,8 @@ if (NOT HAVE_EXCLUSIVE_SCAN)
     add_definitions(-DNEED_EXCLUSIVE_SCAN)
 endif ()
 
+
+
 # check for conda environment
 if ("$ENV{CONDA_BUILD}" STREQUAL "1")
     message("CONDA_BUILD detected. BUILD_PREFIX: $ENV{BUILD_PREFIX} PREFIX: $ENV{PREFIX}")
@@ -398,17 +400,18 @@ if (${ARROW_BUILD_TYPE} STREQUAL "SYSTEM")
     message(STATUS "Arrow dataset lib: ${ARROW_DATASET_LIB}")
 
     if (PYCYLON_BUILD)
+        set(ARROW_PY_LIB ${ARROW_LIB_DIR})
         find_library(ARROW_PY_LIB arrow_python ${CYLON_ARROW_VERSION} REQUIRED)
         message(STATUS "Arrow py lib: ${ARROW_PY_LIB}")
     endif (PYCYLON_BUILD)
 
 elseif (${ARROW_BUILD_TYPE} STREQUAL "SOURCE")
     message("Building Arrow from SOURCE")
+    set(CMAKE_PREFIX_PATH ${ARROW_ROOT})
     include(ConfigureArrow)
     include_directories(SYSTEM "${ARROW_INCLUDE_DIR}")
 elseif (${ARROW_BUILD_TYPE} STREQUAL "CUSTOM")
     message("Using CUSTOM Arrow installation")
-
     if (NOT ARROW_LIB_DIR)
         message(FATAL_ERROR "ARROW_BUILD_TYPE is set to CUSTOM, ARROW_LIB_DIR should be set")
     endif ()

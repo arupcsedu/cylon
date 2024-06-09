@@ -31,7 +31,7 @@ jobs:
       - name: Conda Init
         run: conda init $(basename ${SHELL})
 
-      - uses: conda-incubator/setup-miniconda@v2
+      - uses: conda-incubator/setup-miniconda
         with:
           activate-environment: cylon_dev
           environment-file: conda/environments/cylon_MacOS.yml

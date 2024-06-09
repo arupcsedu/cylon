@@ -6,10 +6,10 @@ channels:
   - defaults
 dependencies:
   - cudf
-  - cuda-toolkit=11.8
-  - cuda-runtime=11.8
-  - cuda-nvcc=11.8
-  - cuda-cudart=11.8
+  - cuda-toolkit=11.5
+  - cuda-runtime=11.5
+  - cuda-nvcc=11.5
+  - cuda-cudart=11.5
   - python=3.11
   - cmake
   #- arrow-cpp=9
