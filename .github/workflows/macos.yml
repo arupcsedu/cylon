@@ -30,8 +30,11 @@ jobs:
         run: brew install re2 automake boost brotli c-ares ccache flatbuffers grpc llvm lz4 minio ninja openssl@1.1 protobuf rapidjson snappy thrift wget zstd miniconda
       - name: Conda Init
         run: conda init $(basename ${SHELL})
+      
+      - name: Include $CONDA in $PATH
+      run: echo ::add-path::$CONDA/bin
 
-      - uses: conda-incubator/setup-miniconda
+      - uses: conda-incubator/setup-miniconda@v2
         with:
           activate-environment: cylon_dev
           environment-file: conda/environments/cylon_MacOS.yml

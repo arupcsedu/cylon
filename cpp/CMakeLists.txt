@@ -400,8 +400,7 @@ if (${ARROW_BUILD_TYPE} STREQUAL "SYSTEM")
     message(STATUS "Arrow dataset lib: ${ARROW_DATASET_LIB}")
 
     if (PYCYLON_BUILD)
-        set(ARROW_PY_LIB ${ARROW_LIB_DIR})
-        find_library(ARROW_PY_LIB arrow_python ${CYLON_ARROW_VERSION} REQUIRED)
+        find_library(ARROW_PY_LIB pyarrow ${CYLON_ARROW_VERSION} REQUIRED)
         message(STATUS "Arrow py lib: ${ARROW_PY_LIB}")
     endif (PYCYLON_BUILD)
 
