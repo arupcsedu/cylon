@@ -218,9 +218,9 @@ def build_cpp():
     verb = '-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON' if args.verbose else ''
     clean = '--clean-first' if args.clean else ''
 
-    if OS_NAME == 'Linux':
-        pyarrow_location = os.path.dirname(pa.__file__)
-        conda_prefix = check_conda_prefix()
+    pyarrow_location = os.path.dirname(pa.__file__)
+    conda_prefix = check_conda_prefix()
+    if OS_NAME == 'Linux' or OS_NAME == 'Darwin':
         if not os.path.exists(f"{conda_prefix}/lib/libarrow_python.so"):
             sym_generator = f"ln -s {pyarrow_location}/libarrow_python.so {conda_prefix}/lib/libarrow_python.so"
             logger.info(f"Generate Symbolic link: {sym_generator}")
@@ -238,6 +238,12 @@ def build_cpp():
 
         os.environ['MPI_CXX']=f"{conda_prefix}/bin/mpicxx" 
         logger.info(f"export mpicxx: : {os.getenv('MPI_CXX')}")
+    else:
+        if not os.path.exists(f"{conda_prefix}/lib/libarrow_python.so"):
+            sym_generator = f"mlink {pyarrow_location}/libarrow_python.so {conda_prefix}/lib/libarrow_python.so"
+            logger.info(f"Generate Symbolic link: {sym_generator}")
+            res = subprocess.call(sym_generator, cwd=BUILD_DIR, shell=True)
+            check_status(res, "Generate Symbolic link")
 
 
     cmake_command = f"cmake -DPYCYLON_BUILD={on_off(BUILD_PYTHON)} {win_cmake_args} " \
