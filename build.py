@@ -239,8 +239,8 @@ def build_cpp():
         os.environ['MPI_CXX']=f"{conda_prefix}/bin/mpicxx" 
         logger.info(f"export mpicxx: : {os.getenv('MPI_CXX')}")
     else:
-        if not os.path.exists(f"{conda_prefix}/lib/libarrow_python.so"):
-            sym_generator = f"mlink {pyarrow_location}/libarrow_python.so {conda_prefix}/lib/libarrow_python.so"
+        if not os.path.exists(f"{conda_prefix}\lib\libarrow_python.so"):
+            sym_generator = f"mklink {pyarrow_location}\libarrow_python.so {conda_prefix}\lib\libarrow_python.so"
             logger.info(f"Generate Symbolic link: {sym_generator}")
             res = subprocess.call(sym_generator, cwd=BUILD_DIR, shell=True)
             check_status(res, "Generate Symbolic link")
