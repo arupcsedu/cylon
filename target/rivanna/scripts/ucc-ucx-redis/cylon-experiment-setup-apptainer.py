@@ -41,11 +41,11 @@ parser.add_argument('-i', dest='it', type=int, default=10) #10
 
 parser.add_argument('-u', dest='unique', type=float, help="unique factor", default=0.9)
 
-parser.add_argument('-o', dest='operation', type=str, choices=['join', 'sort', 'slice'],
+parser.add_argument('-o', dest='operation', type=str, choices=['join', 'sort', 'slice', 'floatPerf'],
                         default="join")
 
 parser.add_argument('-p2', dest='partition', type=str, default="standard")
-parser.add_argument('-m', dest='memory', type=str, default="10000")
+parser.add_argument('-m', dest='memory', type=str, default="DefMemPerNode")
 
 #parser.add_argument('-p2', dest='ucx_port_range', type=str,
 #                   help="Range of ports to use for UCX",
@@ -99,6 +99,13 @@ env_vars = [f"ENV={args['env']}",
 env_vars_str = ",".join(env_vars)
 
 print(f"env args to pass to apptainer: {env_vars_str}")
+
+
+memspec = ""
+
+if args['memory'] != "DefMemPerNode":
+    memspec = f"#SBATCH --mem={args['memory']}"
+
 
 
 
@@ -167,7 +174,7 @@ for nodes, threads, cpus, partition, exclusive in combination:
   #SBATCH --nodes={nodes}
   #SBATCH --ntasks={threads}
   #SBATCH --cpus-per-task={cpus}
-  #SBATCH --mem={args['memory']}
+  {memspec}
   #SBATCH --time=15:00
   #SBATCH --time=15:00
   #SBATCH --output=out-{nodes:02d}-{threads:02d}{jobid}.log
